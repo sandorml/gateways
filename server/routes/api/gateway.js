@@ -1,19 +1,6 @@
 const GatewayModel = require("../../db/models/gateway");
 const router = require("express").Router();
-
-// middleware
-async function resolveGateway(req, res, next) {
-  GatewayModel.findOne({ _id: req.params.id }).exec((err, item) => {
-    if (err) {
-      res.status(500).send({ error: err.message });
-    } else if (item === null) {
-      res.status(404).send({ error: "gateway not found" });
-    } else {
-      req.gateway = item;
-      next();
-    }
-  });
-}
+const { resolveGateway } = require("../../middleware");
 
 // list
 router.get("/", async (req, res, next) => {

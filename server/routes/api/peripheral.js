@@ -1,20 +1,6 @@
-const GatewayModel = require("../../db/models/gateway");
 const PeripheralModel = require("../../db/models/peripheral");
 const router = require("express").Router();
-
-// middleware
-async function resolvePeripheral(req, res, next) {
-  PeripheralModel.findOne({ _id: req.params.id }).exec((err, item) => {
-    if (err) {
-      res.status(500).send({ error: err.message });
-    } else if (item === null) {
-      res.status(404).send({ error: "peripheral not found" });
-    } else {
-      req.peripheral = item;
-      next();
-    }
-  });
-}
+const { resolveGateway, resolvePeripheral } = require("../../middleware");
 
 // list
 router.get("/", async (req, res, next) => {
@@ -59,6 +45,14 @@ router.delete("/:id", resolvePeripheral, async (req, res, next) => {
     } else {
       res.status(200).json(item);
     }
+  });
+});
+
+// peripherals that belong to a gateway
+router.get("/gateway/:id", resolveGateway, async (req, res, next) => {
+  PeripheralModel.find({ gateway: req.params.id }).exec((err, items) => {
+    if (err) return res.status(500).send({ error: err.message });
+    return res.json(items);
   });
 });
 
