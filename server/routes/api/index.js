@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-router.use("/mock", require("./mock"));
+router.use("/gateway", require("./gateway"));
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
