@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 import Peripheral from "./Peripheral";
 import PeripheralHeader from "./PeripheralHeader";
@@ -30,6 +35,7 @@ export default function PeripheralContainer() {
   return (
     <Body>
       <PeripheralHeader serial={selectedGateway.serial} />
+      <Notification/>
       <Container>
         {peripherals.map((peripheral) => (
           <Peripheral
@@ -42,4 +48,18 @@ export default function PeripheralContainer() {
       </Container>
     </Body>
   );
+}
+
+/**
+ * Component to show a notification if the gateway has the maximun amount of peripherals
+ */
+function Notification() {
+  const { maxPeripherals } = useSelector((state) => state.peripheralReducers);
+  useEffect(() => {
+    if (maxPeripherals) {
+      NotificationManager.info("Gateway has reached the maximun of peripherals", "", 3000);
+    }
+  }, [maxPeripherals]);
+
+  return <NotificationContainer />;
 }
