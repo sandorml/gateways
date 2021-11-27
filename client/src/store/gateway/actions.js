@@ -8,6 +8,9 @@ export const fetchGateways = () => async (dispatch) => {
   try {
     const { data } = await apiFetchGateways();
     dispatch(setGateways(data));
+    if(data.length){
+      dispatch(selectGateway(data[0]));
+    }
   } catch (error) {
     console.error(error);
   }
