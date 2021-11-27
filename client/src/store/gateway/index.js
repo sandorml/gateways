@@ -1,4 +1,4 @@
-import { SET_GATEWAYS, SEARCH_GATEWAY, SELECT_GATEWAY } from "./actions";
+import { SET_GATEWAYS, SEARCH_GATEWAY, SELECT_GATEWAY, CREATE_GATEWAY } from "./actions";
 
 const initialState = {
   gateways: [],
@@ -14,6 +14,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, search: action.search, gateways: action.gateways };
     case SELECT_GATEWAY:
       return { ...state, selectedGateway: action.gateway };
+    case CREATE_GATEWAY:
+      return {
+        ...state,
+        selectedGateway: action.gateway,
+        gateways: [...state.gateways, action.gateway],
+      };
     default:
       return state;
   }

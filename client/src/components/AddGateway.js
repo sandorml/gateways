@@ -7,6 +7,8 @@ import Modal from "react-modal";
 import AddButton from "./AddButton";
 import Input from "./Input";
 
+import { createGateway } from "../store/gateway/actions";
+
 const ButtonClose = styled.button`
   border: none;
   border-radius: 2px;
@@ -22,8 +24,16 @@ const ButtonSubmit = styled.input`
   color: white;
   font-weight: bold;
   padding: 10px;
-  margin-top: 5px;;
+  margin-top: 5px;
   border-radius: 5px;
+`;
+const FormInputContainer = styled.div`
+  display: flex;
+`;
+
+const ErrorMesasge = styled.p`
+  color: #bf3939;
+  font-weight: bolder;
 `;
 
 const GatewayComponent = styled.button``;
@@ -45,6 +55,7 @@ function AddGateway() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   const dispatch = useDispatch();
 
@@ -56,7 +67,9 @@ function AddGateway() {
     setIsOpen(false);
   };
   const onSubmit = (data) => {
-    // dispatch();
+    dispatch(createGateway(data.serial, data.name, data.ip));
+    reset();
+    closeModal();
   };
 
   return (
@@ -79,11 +92,14 @@ function AddGateway() {
           <Input
             placeholder="ipv4 Address"
             {...register("ip", {
+              required: true,
               pattern:
                 /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/i,
             })}
           />
-          {errors.ip && "Ip is required"}
+
+          {errors.serial && <ErrorMesasge>"Serial is required"</ErrorMesasge>}
+          {errors.ip && <ErrorMesasge>"Ip is required"</ErrorMesasge>}
           <ButtonSubmit type="submit" />
         </form>
       </Modal>
