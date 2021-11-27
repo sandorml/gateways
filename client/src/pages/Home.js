@@ -9,6 +9,7 @@ import PeripheralContainer from "../components/PeripheralContainer";
 
 const Layout = styled.div`
   display: flex;
+  height: 100%;
 `;
 
 const Home = () => {

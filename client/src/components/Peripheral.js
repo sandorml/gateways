@@ -6,9 +6,10 @@ const PeripheralComponent = styled.div`
     width: 140px;
     height: fit-content;
     padding: 10px;
-    margin: 20px;
-    border: 1px solid black;
+    margin: 5px;
+    border: 1px solid #dbdbdb;
     border-radius: 10px;
+    justify-content: space-around;
 `;
 
 function Peripheral(props) {
