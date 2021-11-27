@@ -32,7 +32,12 @@ export default function PeripheralContainer() {
       <PeripheralHeader serial={selectedGateway.serial} />
       <Container>
         {peripherals.map((peripheral) => (
-          <Peripheral {...peripheral} />
+          <Peripheral
+            uid={peripheral.uid}
+            vendor={peripheral.vendor}
+            date={peripheral.date}
+            status={peripheral.status === 1}
+          />
         ))}
       </Container>
     </Body>

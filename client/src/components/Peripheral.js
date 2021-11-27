@@ -12,20 +12,20 @@ const PeripheralComponent = styled.div`
     justify-content: space-around;
 `;
 
-function Peripheral(props) {
+function Peripheral({uid, vendor, date, status}) {
   return (
     <PeripheralComponent>
       <div>
-        <b>UID:</b> {props.uid}
+        <b>UID:</b> {uid}
       </div>
       <div>
-        <b>Vendor:</b> {props.vendor}
+        <b>Vendor:</b> {vendor}
       </div>
       <div>
-        <b>Date:</b> {props.date}
+        <b>Date:</b> {date}
       </div>
       <div>
-        <b>Status:</b> {props.status}
+        <b>Status:</b> {status}
       </div>
     </PeripheralComponent>
   );
@@ -35,7 +35,7 @@ Peripheral.propTypes = {
   uid: PropTypes.string,
   vendor: PropTypes.string,
   date: PropTypes.string,
-  status: PropTypes.bool,
+  status: PropTypes.bool
 };
 
 export default Peripheral;
