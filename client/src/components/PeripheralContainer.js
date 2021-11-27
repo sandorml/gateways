@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+
 import Peripheral from "./Peripheral";
 import PeripheralHeader from "./PeripheralHeader";
+import { selectGateway } from "../store/gateway/actions";
 
 const Container = styled.div`
   height: fit-content;
@@ -11,9 +14,16 @@ const Container = styled.div`
 `;
 
 export default function PeripheralContainer() {
+  const { selectedGateway } = useSelector((state) => state.gatewayReducers);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // dispatch(fetchGateways());
+  }, [dispatch, selectGateway]);
+
   return (
     <div>
-      <PeripheralHeader />
+      <PeripheralHeader serial={selectedGateway.serial} />
       <Container>
         <Peripheral
           uid={"hoa"}

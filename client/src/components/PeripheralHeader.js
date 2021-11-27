@@ -22,11 +22,11 @@ const Actions = styled.div`
   margin-right: 22px;
 `;
 
-function PeripheralHeader(props) {
+function PeripheralHeader({serial}) {
   return (
     <Container>
       <Text>
-        <b>Serial</b> {props.serial}
+        <b>Serial:</b> {serial}
       </Text>
       <Actions>
           <AddButton small={true} onClick={()=> alert("hellooo")}/>
