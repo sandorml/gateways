@@ -16,9 +16,11 @@ export const fetchGateways = () => async (dispatch) => {
 export const fetchAndSearchGateways = (search) => async (dispatch) => {
   try {
     const { data } = await apiFetchGateways();
-    const filteredGateways = data.filter((gateway) =>
-      gateway.name.toLower().contains(search)
+
+    const filteredGateways = data.filter(
+      (gateway) => gateway.name.toLowerCase().indexOf(search.toLowerCase()) >= 0
     );
+
     dispatch(searchGateways(search, filteredGateways));
   } catch (error) {
     console.error(error);

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAndSearchGateways } from "../store/gateway/actions";
 
 const Bar = styled.div`
   margin: 5px;
@@ -24,12 +25,12 @@ const SearchInput = styled.input`
   }
 `;
 
-function GatewaySearch(props) {
-  const { fetch, placeholder } = props;
+function GatewaySearch({ placeholder }) {
   const dispatch = useDispatch();
+  const { search } = useSelector((state) => state.gatewayReducers);
 
-  const handleChange = (search) => {
-    // dispatch(fetch(search.target.value));
+  const handleChange = (input) => {
+    dispatch(fetchAndSearchGateways(input.target.value));
   };
 
   return (
@@ -38,6 +39,7 @@ function GatewaySearch(props) {
         type="text"
         placeholder={placeholder}
         onChange={handleChange}
+        // value={search}
       />
     </Bar>
   );
