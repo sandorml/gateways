@@ -4,65 +4,37 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Peripheral from "./Peripheral";
 import PeripheralHeader from "./PeripheralHeader";
-import { selectGateway } from "../store/gateway/actions";
+import { fetchPeripherals } from "../store/peripheral/actions";
 
 const Container = styled.div`
   height: fit-content;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
+  width: 100%;
+`;
+
+const Body = styled.div`
+  width: 100%;
 `;
 
 export default function PeripheralContainer() {
   const { selectedGateway } = useSelector((state) => state.gatewayReducers);
+  const { peripherals } = useSelector((state) => state.peripheralReducers);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(fetchGateways());
-  }, [dispatch, selectGateway]);
+    dispatch(fetchPeripherals(selectedGateway._id));
+  }, [dispatch, selectedGateway]);
 
   return (
-    <div>
+    <Body>
       <PeripheralHeader serial={selectedGateway.serial} />
       <Container>
-        <Peripheral
-          uid={"hoa"}
-          vendor={"vendor"}
-          date={"23/2/1122"}
-          status={true}
-        />
-        <Peripheral
-          uid={"hoa"}
-          vendor={"vendor"}
-          date={"23/2/1122"}
-          status={true}
-        />
-        <Peripheral
-          uid={"hoa"}
-          vendor={"vendor"}
-          date={"23/2/1122"}
-          status={true}
-        />
-        <Peripheral
-          uid={"hoa"}
-          vendor={"vendor"}
-          date={"23/2/1122"}
-          status={true}
-        />
-
-        <Peripheral
-          uid={"hoa"}
-          vendor={"vendor"}
-          date={"23/2/1122"}
-          status={true}
-        />
-        <Peripheral
-          uid={"hoa"}
-          vendor={"vendor"}
-          date={"23/2/1122"}
-          status={true}
-        />
+        {peripherals.map((peripheral) => (
+          <Peripheral {...peripheral} />
+        ))}
       </Container>
-    </div>
+    </Body>
   );
 }

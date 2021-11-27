@@ -1,17 +1,16 @@
-const GET_PERIPHERALS = "GET_PERIPHERALS";
+import { SET_PERIPHERALS } from "./actions";
 
-export const getPeripherals = (peripherals) => {
-  return {
-    type: GET_PERIPHERALS,
-    peripherals,
-  };
+const initialState = {
+  peripherals: [],
 };
 
-const reducer = (state = {}, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PERIPHERALS: {
-      return action.peripherals;
-    }
+    case SET_PERIPHERALS:
+      return {
+        ...state,
+        peripherals: action.peripherals,
+      };
     default:
       return state;
   }

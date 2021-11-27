@@ -6,7 +6,7 @@ import AddButton from "./AddButton";
 const Container = styled.div`
 margin-left: -10px;
   height: 30px;
-  width: 100%;
+  width: 96.8%;
   padding: 20px;
   box-shadow: inset 0px 0px 5px 2px #dbdbdb;
 
