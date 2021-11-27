@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import AddButton from "./AddButton";
+import { useDispatch, useSelector } from "react-redux";
+
+import AddGateway from "./AddGateway";
 import GatewaySearch from "./GatewaySearch";
+import Gateway from "../components/Gateway";
+import { fetchGateways, selectGateway } from "../store/gateway/actions";
 
 const Container = styled.div`
   width: 250px;
@@ -25,15 +29,35 @@ const AddContainer = styled.div`
   width: 240px;
 `;
 
-export default function GatewayContainer(props) {
+export default function GatewayContainer() {
+  const { gateways, selectedGateway } = useSelector(
+    (state) => state.gatewayReducers
+  );
+  const dispatch = useDispatch();
+
+  const onClickGateway = (gateway) => {
+    dispatch(selectGateway(gateway));
+  };
+
+  useEffect(() => {
+    dispatch(fetchGateways());
+  }, [dispatch]);
   return (
     <Container>
       <GatewaySearch placeholder={"Search Gateway"} />
       <Items>
-        {props.children}
+        {gateways.map((gateway) => (
+          <Gateway
+            key={gateway.serial}
+            name={gateway.name}
+            ip={gateway.ipv4Address}
+            onClick={() => onClickGateway(gateway)}
+            selected={gateway.serial === selectedGateway.serial}
+          />
+        ))}
       </Items>
       <AddContainer>
-        <AddButton onClick={() => alert("hello")} text={"Add Gateway"} />
+        <AddGateway />
       </AddContainer>
     </Container>
   );
