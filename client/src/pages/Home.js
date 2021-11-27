@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Gateway from "../components/Gateway";
 import GatewayContainer from "../components/GatewayContainer";
 import PeripheralContainer from "../components/PeripheralContainer";
-
+import { fetchGateways } from "../store/gateway/actions";
 
 const Layout = styled.div`
   display: flex;
@@ -13,20 +13,20 @@ const Layout = styled.div`
 `;
 
 const Home = () => {
-  // const { students } = useSelector((state) => state.students);
+  const { gateways } = useSelector((state) => state.gatewayReducers);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(fetchStudents());
+    dispatch(fetchGateways());
   }, [dispatch]);
   return (
     <Layout>
       <GatewayContainer>
-        <Gateway />
-        <Gateway />
-        <Gateway />
+        {gateways.map((gateway) => (
+          <Gateway name={gateway.name} ip={gateway.ipv4Address} />
+        ))}
       </GatewayContainer>
-      <PeripheralContainer/>
+      <PeripheralContainer />
     </Layout>
   );
 };
