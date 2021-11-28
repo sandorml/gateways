@@ -10,7 +10,11 @@ import "react-notifications/lib/notifications.css";
 import Peripheral from "./Peripheral";
 import PeripheralHeader from "./PeripheralHeader";
 import AddOrEditPeripheral from "./AddOrEditPeripheral";
-import { fetchPeripherals } from "../../store/peripheral/actions";
+import {
+  fetchPeripherals,
+  deletePeripheral,
+} from "../../store/peripheral/actions";
+import AddOrEditButton from "../AddOrEditButton";
 
 const Container = styled.div`
   height: fit-content;
@@ -29,7 +33,9 @@ export default function PeripheralContainer() {
   const { peripherals } = useSelector((state) => state.peripheralReducers);
   const dispatch = useDispatch();
 
-
+  const onClickDeletePeripheral = (peripheral) => {
+    dispatch(deletePeripheral(peripheral));
+  };
   useEffect(() => {
     dispatch(fetchPeripherals(selectedGateway._id));
   }, [dispatch, selectedGateway]);
@@ -37,7 +43,7 @@ export default function PeripheralContainer() {
   return (
     <Body>
       <PeripheralHeader gateway={selectedGateway} />
-      <Notification/>
+      <Notification />
       <Container>
         {peripherals.map((peripheral) => (
           <Peripheral
@@ -46,7 +52,13 @@ export default function PeripheralContainer() {
             vendor={peripheral.vendor}
             date={peripheral.dateCreated}
             status={peripheral.status === 1}
-            edit={<AddOrEditPeripheral peripheral={peripheral}/>}
+            edit={<AddOrEditPeripheral peripheral={peripheral} />}
+            remove={
+              <AddOrEditButton
+                size={"small-delete"}
+                onClick={() => onClickDeletePeripheral(peripheral)}
+              />
+            }
           />
         ))}
       </Container>
@@ -61,7 +73,11 @@ function Notification() {
   const { maxPeripherals } = useSelector((state) => state.peripheralReducers);
   useEffect(() => {
     if (maxPeripherals) {
-      NotificationManager.info("Gateway has reached the maximun of peripherals", "", 3000);
+      NotificationManager.info(
+        "Gateway has reached the maximun of peripherals",
+        "",
+        3000
+      );
     }
   }, [maxPeripherals]);
 

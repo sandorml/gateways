@@ -3,9 +3,10 @@ import {
   CREATE_PERIPHERAL,
   SET_MAX_PERIPHERAL,
   EDIT_PERIPHERAL,
+  DELETE_PERIPHERAL
 } from "./actions";
 
-import { updatePeripheral } from "./helpers";
+import { updatePeripheral, deletePeripheral } from "./helpers";
 
 const initialState = {
   peripherals: [],
@@ -33,6 +34,8 @@ const reducer = (state = initialState, action) => {
       };
     case EDIT_PERIPHERAL:
       return updatePeripheral(state, action);
+    case DELETE_PERIPHERAL:
+      return deletePeripheral(state, action);
     default:
       return state;
   }

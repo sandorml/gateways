@@ -26,7 +26,11 @@ const Row = styled.div`
   align-items: center;
 `;
 
-function Peripheral({ uid, vendor, date, status, edit }) {
+const RowActions = styled(Row)`
+  gap: 10px;
+`;
+
+function Peripheral({ uid, vendor, date, status, edit, remove }) {
   return (
     <PeripheralComponent>
       <div>
@@ -39,8 +43,8 @@ function Peripheral({ uid, vendor, date, status, edit }) {
         <b>Date:</b> {moment(date).format("MMM Do YY")}
       </div>
       <Row>
-          {status ? <Enabled>Online</Enabled> : <Disabled>Offline</Disabled>}
-          {edit}
+        {status ? <Enabled>Online</Enabled> : <Disabled>Offline</Disabled>}
+        <RowActions>{edit} {remove}</RowActions>
       </Row>
     </PeripheralComponent>
   );

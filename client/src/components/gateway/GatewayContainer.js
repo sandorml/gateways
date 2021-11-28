@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import AddOrEditGateway from "./AddOrEditGateway";
 import GatewaySearch from "./GatewaySearch";
 import Gateway from "./Gateway";
-import { fetchGateways, selectGateway } from "../../store/gateway/actions";
+import {
+  fetchGateways,
+  selectGateway,
+  deleteGateway,
+} from "../../store/gateway/actions";
+import AddOrEditButton from "../AddOrEditButton";
 
 const Container = styled.div`
   width: 250px;
@@ -33,6 +38,11 @@ const Row = styled.div`
   display: flex;
   align-items: center;
 `;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 export default function GatewayContainer() {
   const { gateways, selectedGateway } = useSelector(
@@ -44,6 +54,10 @@ export default function GatewayContainer() {
     dispatch(selectGateway(gateway));
   };
 
+  const onClickDeleteGateway = (gateway) => {
+    dispatch(deleteGateway(gateway));
+  };
+
   useEffect(() => {
     dispatch(fetchGateways());
   }, [dispatch]);
@@ -53,7 +67,13 @@ export default function GatewayContainer() {
       <Items>
         {gateways.map((gateway) => (
           <Row>
-            <AddOrEditGateway gateway={gateway} />
+            <Column>
+              <AddOrEditGateway gateway={gateway} />
+              <AddOrEditButton
+                size={"small-delete"}
+                onClick={() => onClickDeleteGateway(gateway)}
+              />
+            </Column>
             <Gateway
               key={gateway.serial}
               name={gateway.name}

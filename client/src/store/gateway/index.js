@@ -4,9 +4,10 @@ import {
   SELECT_GATEWAY,
   CREATE_GATEWAY,
   UPDATE_GATEWAY,
+  DELETE_GATEWAY,
 } from "./actions";
 
-import { updateGateway } from "./helpers";
+import { updateGateway, deleteGateway } from "./helpers";
 
 const initialState = {
   gateways: [],
@@ -30,6 +31,8 @@ const reducer = (state = initialState, action) => {
       };
     case UPDATE_GATEWAY:
       return updateGateway(state, action);
+    case DELETE_GATEWAY:
+      return deleteGateway(state, action);
     default:
       return state;
   }

@@ -29,10 +29,20 @@ const ButtonEdit = styled(Button)`
   border-radius: 20px;
 `;
 
+const ButtonDelete = styled(Button)`
+  width: 10px;
+  height: 10px;
+  background-color: #bf3939;
+  padding: unset;
+  border-radius: 20px;
+`;
+
 function AddOrEditButton({ text, onClick, size }) {
   switch (size) {
     case "small":
       return <ButtonEdit onClick={onClick} />;
+    case "small-delete":
+      return <ButtonDelete onClick={onClick} />;
     default:
       return (
         <Button onClick={onClick} size={size}>
@@ -45,7 +55,7 @@ function AddOrEditButton({ text, onClick, size }) {
 AddOrEditButton.propTypes = {
   text: PropTypes.string,
   onClick: PropTypes.func,
-  size: PropTypes.oneOf(["small", "medium", "normal"]),
+  size: PropTypes.oneOf(["small", "medium", "normal", "small-delete"]),
 };
 
 AddOrEditButton.defaultProps = {

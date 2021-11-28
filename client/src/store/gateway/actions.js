@@ -2,6 +2,7 @@ import {
   apiFetchGateways,
   apiCreateGateway,
   apiUpdateGateway,
+  apiDeleteGateway,
 } from "../../api/gateways";
 
 export const SET_GATEWAYS = "SET_GATEWAYS";
@@ -9,6 +10,7 @@ export const SEARCH_GATEWAY = "SEARCH_GATEWAY";
 export const SELECT_GATEWAY = "SELECT_GATEWAY";
 export const CREATE_GATEWAY = "CREATE_GATEWAY";
 export const UPDATE_GATEWAY = "UPDATE_GATEWAY";
+export const DELETE_GATEWAY = "DELETE_GATEWAY";
 
 export const fetchGateways = () => async (dispatch) => {
   try {
@@ -56,6 +58,15 @@ export const updateGateway = (gateway) => async (dispatch) => {
   }
 };
 
+export const deleteGateway = (gateway) => async (dispatch) => {
+  try {
+    const { data } = await apiDeleteGateway(gateway);
+    dispatch(removeGateway(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const setGateways = (gateways) => {
   return {
     type: SET_GATEWAYS,
@@ -81,6 +92,13 @@ export const selectGateway = (gateway) => {
 export const newGateway = (gateway) => {
   return {
     type: CREATE_GATEWAY,
+    gateway,
+  };
+};
+
+export const removeGateway = (gateway) => {
+  return {
+    type: DELETE_GATEWAY,
     gateway,
   };
 };
