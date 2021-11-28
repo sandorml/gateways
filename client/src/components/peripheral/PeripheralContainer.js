@@ -9,7 +9,7 @@ import "react-notifications/lib/notifications.css";
 
 import Peripheral from "./Peripheral";
 import PeripheralHeader from "./PeripheralHeader";
-import { fetchPeripherals } from "../store/peripheral/actions";
+import { fetchPeripherals } from "../../store/peripheral/actions";
 
 const Container = styled.div`
   height: fit-content;

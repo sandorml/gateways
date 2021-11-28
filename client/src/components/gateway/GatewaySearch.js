@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { fetchAndSearchGateways } from "../store/gateway/actions";
-import Input from "./Input";
+import { fetchAndSearchGateways } from "../../store/gateway/actions";
+import Input from "../Input";
 
 const Bar = styled.div`
   margin: 5px;

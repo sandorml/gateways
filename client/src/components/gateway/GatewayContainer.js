@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AddGateway from "./AddGateway";
 import GatewaySearch from "./GatewaySearch";
-import Gateway from "../components/Gateway";
-import { fetchGateways, selectGateway } from "../store/gateway/actions";
+import Gateway from "./Gateway";
+import { fetchGateways, selectGateway } from "../../store/gateway/actions";
 
 const Container = styled.div`
   width: 250px;

@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 
-import AddButton from "./AddButton";
-import Input from "./Input";
+import AddButton from "../AddButton";
+import Input from "../Input";
 
-import { createPeripheral } from "../store/peripheral/actions";
+import { createPeripheral } from "../../store/peripheral/actions";
 
 const ButtonClose = styled.button`
   border: none;

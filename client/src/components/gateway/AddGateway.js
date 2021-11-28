@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Modal from "react-modal";
 
-import AddButton from "./AddButton";
-import Input from "./Input";
+import AddButton from "../AddButton";
+import Input from "../Input";
 
-import { createGateway } from "../store/gateway/actions";
+import { createGateway } from "../../store/gateway/actions";
 
 const ButtonClose = styled.button`
   border: none;
@@ -27,16 +27,11 @@ const ButtonSubmit = styled.input`
   margin-top: 5px;
   border-radius: 5px;
 `;
-const FormInputContainer = styled.div`
-  display: flex;
-`;
 
 const ErrorMesasge = styled.p`
   color: #bf3939;
   font-weight: bolder;
 `;
-
-const GatewayComponent = styled.button``;
 
 const customStyles = {
   content: {

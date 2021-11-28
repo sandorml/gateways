@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import GatewayContainer from "../components/GatewayContainer";
-import PeripheralContainer from "../components/PeripheralContainer";
+import GatewayContainer from "../components/gateway/GatewayContainer";
+import PeripheralContainer from "../components/peripheral/PeripheralContainer";
 
 const Layout = styled.div`
   display: flex;
@@ -13,9 +13,7 @@ const Home = () => {
   
   return (
     <Layout>
-      <GatewayContainer>
-        
-      </GatewayContainer>
+      <GatewayContainer/>        
       <PeripheralContainer />
     </Layout>
   );
