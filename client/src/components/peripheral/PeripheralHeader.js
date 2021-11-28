@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import AddPeripheral from "./AddPeripheral";
+import AddOrEditPeripheral from "./AddOrEditPeripheral";
 
 const Container = styled.div`
   margin-left: -10px;
@@ -21,21 +21,21 @@ const Actions = styled.div`
   margin-right: 22px;
 `;
 
-function PeripheralHeader({ serial }) {
+function PeripheralHeader({ gateway }) {
   return (
     <Container>
       <Text>
-        <b>Serial:</b> {serial}
+        <b>Serial:</b> {gateway?.serial}
       </Text>
       <Actions>
-        <AddPeripheral />
+        <AddOrEditPeripheral />
       </Actions>
     </Container>
   );
 }
 
 PeripheralHeader.propTypes = {
-  serial: PropTypes.string,
+  gateway: PropTypes.object,
 };
 
 export default PeripheralHeader;

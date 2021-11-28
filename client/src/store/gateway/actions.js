@@ -1,9 +1,14 @@
-import { apiFetchGateways, apiCreateGateway } from "../../api/gateways";
+import {
+  apiFetchGateways,
+  apiCreateGateway,
+  apiUpdateGateway,
+} from "../../api/gateways";
 
 export const SET_GATEWAYS = "SET_GATEWAYS";
 export const SEARCH_GATEWAY = "SEARCH_GATEWAY";
 export const SELECT_GATEWAY = "SELECT_GATEWAY";
 export const CREATE_GATEWAY = "CREATE_GATEWAY";
+export const UPDATE_GATEWAY = "UPDATE_GATEWAY";
 
 export const fetchGateways = () => async (dispatch) => {
   try {
@@ -41,6 +46,16 @@ export const createGateway =
     }
   };
 
+export const updateGateway = (gateway) => async (dispatch) => {
+  try {
+    const { data } = await apiUpdateGateway(gateway);
+    dispatch(editGateway(data));
+    dispatch(selectGateway(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const setGateways = (gateways) => {
   return {
     type: SET_GATEWAYS,
@@ -66,6 +81,13 @@ export const selectGateway = (gateway) => {
 export const newGateway = (gateway) => {
   return {
     type: CREATE_GATEWAY,
+    gateway,
+  };
+};
+
+export const editGateway = (gateway) => {
+  return {
+    type: UPDATE_GATEWAY,
     gateway,
   };
 };

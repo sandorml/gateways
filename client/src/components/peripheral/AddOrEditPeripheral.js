@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
+import PropTypes from "prop-types";
 
-import AddButton from "../AddButton";
+import AddOrEditButton from "../AddOrEditButton";
 import Input from "../Input";
 
-import { createGateway } from "../../store/gateway/actions";
+import { createPeripheral, updatePeripheral } from "../../store/peripheral/actions";
 
 const ButtonClose = styled.button`
   border: none;
@@ -44,8 +45,10 @@ const customStyles = {
   },
 };
 
-function AddGateway() {
+function AddOrEditPeripheral({peripheral}) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const { selectedGateway } = useSelector((state) => state.gatewayReducers);
+
   const {
     register,
     handleSubmit,
@@ -61,40 +64,49 @@ function AddGateway() {
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const onSubmit = (data) => {
-    dispatch(createGateway(data.serial, data.name, data.ip));
+    if(peripheral){
+      dispatch(
+        updatePeripheral(data.uid, data.vendor, data.status, selectedGateway._id)
+      );
+    }else{
+      
+      dispatch(
+        createPeripheral(data.uid, data.vendor, data.status, selectedGateway._id)
+      );
+    }
     reset();
     closeModal();
   };
 
   return (
     <>
-      <AddButton onClick={openModal} text={"Add Gateway"} />
+      <AddOrEditButton onClick={openModal} text={"+"} size={peripheral?"small":"medium"}/>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Create new Gateway"
+        contentLabel="Create new Peripheral"
       >
         <ButtonClose onClick={closeModal}>X</ButtonClose>
-        <h3>Create new Gateway</h3>
+        <h3>Create new Peripheral</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input placeholder="Name" {...register("name")} />
+          <Input placeholder="UID" type="number" {...register("uid")} />
           <Input
-            placeholder="Serial"
-            {...register("serial", { required: true })}
+            placeholder="Vendor"
+            {...register("vendor", { required: true })}
           />
-          <Input
-            placeholder="ipv4 Address"
-            {...register("ip", {
-              required: true,
-              pattern:
-                /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/i,
-            })}
-          />
+          <label htmlFor="status">
+            Status
+            <Input
+              type="checkbox"
+              placeholder="Status"
+              {...register("status")}
+            />
+          </label>
 
-          {errors.serial && <ErrorMesasge>"Serial is required"</ErrorMesasge>}
-          {errors.ip && <ErrorMesasge>"Ip is required"</ErrorMesasge>}
+          {errors.vendor && <ErrorMesasge>"Vendor is required"</ErrorMesasge>}
           <ButtonSubmit type="submit" />
         </form>
       </Modal>
@@ -102,4 +114,8 @@ function AddGateway() {
   );
 }
 
-export default AddGateway;
+AddOrEditPeripheral.propTypes = {
+  peripheral: PropTypes.object,
+};
+
+export default AddOrEditPeripheral;

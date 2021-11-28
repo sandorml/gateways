@@ -34,7 +34,7 @@ export default function PeripheralContainer() {
 
   return (
     <Body>
-      <PeripheralHeader serial={selectedGateway.serial} />
+      <PeripheralHeader gateway={selectedGateway} />
       <Notification/>
       <Container>
         {peripherals.map((peripheral) => (

@@ -24,6 +24,7 @@ const IpContainer = styled.div`
   font-size: smaller;
 `;
 
+
 function Gateway({ name, ip, onClick, selected }) {
   return (
     <GatewayComponent selected={selected} onClick={onClick}>
@@ -37,7 +38,7 @@ Gateway.propTypes = {
   name: PropTypes.string.isRequired,
   ip: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
 };
 
 export default Gateway;

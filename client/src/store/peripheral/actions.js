@@ -1,11 +1,13 @@
 import {
   apiCreatePeripheral,
   apiFetchPeripherals,
+  apiUpdatePeripheral
 } from "../../api/peripherals";
 
 export const SET_PERIPHERALS = "SET_PERIPHERALS";
 export const CREATE_PERIPHERAL = "CREATE_PERIPHERAL";
 export const SET_MAX_PERIPHERAL = "SET_MAX_PERIPHERAL";
+export const EDIT_PERIPHERAL = "EDIT_PERIPHERAL";
 
 export const fetchPeripherals = (gatewayId) => async (dispatch) => {
   try {
@@ -35,6 +37,15 @@ export const createPeripheral =
     }
   };
 
+export const updatePeripheral = (peripheral) => async (dispatch) => {
+  try {
+    const { data } = await apiUpdatePeripheral(peripheral);
+    dispatch(editPeripheral(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const setPeripherals = (peripherals) => {
   return {
     type: SET_PERIPHERALS,
@@ -45,6 +56,13 @@ export const setPeripherals = (peripherals) => {
 export const newPeripheral = (peripheral) => {
   return {
     type: CREATE_PERIPHERAL,
+    peripheral,
+  };
+};
+
+export const editPeripheral = (peripheral) => {
+  return {
+    type: EDIT_PERIPHERAL,
     peripheral,
   };
 };
