@@ -14,7 +14,7 @@ import { fetchPeripherals } from "../store/peripheral/actions";
 const Container = styled.div`
   height: fit-content;
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   flex-wrap: wrap;
   width: 100%;
 `;
@@ -41,7 +41,7 @@ export default function PeripheralContainer() {
           <Peripheral
             uid={peripheral.uid}
             vendor={peripheral.vendor}
-            date={peripheral.date}
+            date={peripheral.dateCreated}
             status={peripheral.status === 1}
           />
         ))}
