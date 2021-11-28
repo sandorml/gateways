@@ -9,6 +9,7 @@ import "react-notifications/lib/notifications.css";
 
 import Peripheral from "./Peripheral";
 import PeripheralHeader from "./PeripheralHeader";
+import AddOrEditPeripheral from "./AddOrEditPeripheral";
 import { fetchPeripherals } from "../../store/peripheral/actions";
 
 const Container = styled.div`
@@ -28,6 +29,7 @@ export default function PeripheralContainer() {
   const { peripherals } = useSelector((state) => state.peripheralReducers);
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     dispatch(fetchPeripherals(selectedGateway._id));
   }, [dispatch, selectedGateway]);
@@ -39,10 +41,12 @@ export default function PeripheralContainer() {
       <Container>
         {peripherals.map((peripheral) => (
           <Peripheral
+            key={peripheral._id}
             uid={peripheral.uid}
             vendor={peripheral.vendor}
             date={peripheral.dateCreated}
             status={peripheral.status === 1}
+            edit={<AddOrEditPeripheral peripheral={peripheral}/>}
           />
         ))}
       </Container>

@@ -8,7 +8,10 @@ import PropTypes from "prop-types";
 import AddOrEditButton from "../AddOrEditButton";
 import Input from "../Input";
 
-import { createPeripheral, updatePeripheral } from "../../store/peripheral/actions";
+import {
+  createPeripheral,
+  updatePeripheral,
+} from "../../store/peripheral/actions";
 
 const ButtonClose = styled.button`
   border: none;
@@ -45,7 +48,7 @@ const customStyles = {
   },
 };
 
-function AddOrEditPeripheral({peripheral}) {
+function AddOrEditPeripheral({ peripheral }) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const { selectedGateway } = useSelector((state) => state.gatewayReducers);
 
@@ -54,7 +57,9 @@ function AddOrEditPeripheral({peripheral}) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: peripheral ? peripheral : {},
+  });
   const dispatch = useDispatch();
 
   const openModal = () => {
@@ -66,14 +71,16 @@ function AddOrEditPeripheral({peripheral}) {
   };
 
   const onSubmit = (data) => {
-    if(peripheral){
+    if (peripheral) {
+      dispatch(updatePeripheral(data));
+    } else {
       dispatch(
-        updatePeripheral(data.uid, data.vendor, data.status, selectedGateway._id)
-      );
-    }else{
-      
-      dispatch(
-        createPeripheral(data.uid, data.vendor, data.status, selectedGateway._id)
+        createPeripheral(
+          data.uid,
+          data.vendor,
+          data.status,
+          selectedGateway._id
+        )
       );
     }
     reset();
@@ -82,8 +89,13 @@ function AddOrEditPeripheral({peripheral}) {
 
   return (
     <>
-      <AddOrEditButton onClick={openModal} text={"+"} size={peripheral?"small":"medium"}/>
+      <AddOrEditButton
+        onClick={openModal}
+        text={"+"}
+        size={peripheral ? "small" : "medium"}
+      />
       <Modal
+        ariaHideApp={false}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}

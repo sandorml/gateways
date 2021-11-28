@@ -13,20 +13,20 @@ const PeripheralComponent = styled.div`
   justify-content: space-around;
 `;
 
-const Status = styled.div`
-  width: 6px;
-  height: 6px;
-  border-radius: 5px;
-  float: right;
+const Enabled = styled.div`
+  color: #4caf50;
 `;
-const Enabled = styled(Status)`
-  background-color: #4caf50;
-`;
-const Disabled = styled(Status)`
-  background-color: #bf3939;
+const Disabled = styled.div`
+  color: #bf3939;
 `;
 
-function Peripheral({ uid, vendor, date, status }) {
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+function Peripheral({ uid, vendor, date, status, edit }) {
   return (
     <PeripheralComponent>
       <div>
@@ -38,9 +38,10 @@ function Peripheral({ uid, vendor, date, status }) {
       <div>
         <b>Date:</b> {moment(date).format("MMM Do YY")}
       </div>
-      <div>
-         {status ? <Enabled /> : <Disabled />}
-      </div>
+      <Row>
+          {status ? <Enabled>Online</Enabled> : <Disabled>Offline</Disabled>}
+          {edit}
+      </Row>
     </PeripheralComponent>
   );
 }
@@ -50,6 +51,7 @@ Peripheral.propTypes = {
   vendor: PropTypes.string,
   date: PropTypes.string,
   status: PropTypes.bool,
+  edit: PropTypes.node,
 };
 
 export default Peripheral;

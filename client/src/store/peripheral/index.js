@@ -2,7 +2,10 @@ import {
   SET_PERIPHERALS,
   CREATE_PERIPHERAL,
   SET_MAX_PERIPHERAL,
+  EDIT_PERIPHERAL,
 } from "./actions";
+
+import { updatePeripheral } from "./helpers";
 
 const initialState = {
   peripherals: [],
@@ -28,6 +31,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         maxPeripherals: true,
       };
+    case EDIT_PERIPHERAL:
+      return updatePeripheral(state, action);
     default:
       return state;
   }

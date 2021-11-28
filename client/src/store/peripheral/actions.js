@@ -39,6 +39,7 @@ export const createPeripheral =
 
 export const updatePeripheral = (peripheral) => async (dispatch) => {
   try {
+    console.log(peripheral);
     const { data } = await apiUpdatePeripheral(peripheral);
     dispatch(editPeripheral(data));
   } catch (error) {
