@@ -6,13 +6,13 @@ const { resolveGateway, resolvePeripheral } = require("../../middleware");
 router.get("/", async (req, res, next) => {
   PeripheralModel.find().exec((err, items) => {
     if (err) return res.status(500).send({ error: err.message });
-    return res.json(items);
+    return res.status(200).json(items);
   });
 });
 
 // detail
 router.get("/:id", resolvePeripheral, async (req, res, next) => {
-  return res.json(req.peripheral);
+  return res.status(200).json(req.peripheral);
 });
 
 // create
@@ -52,7 +52,7 @@ router.delete("/:id", resolvePeripheral, async (req, res, next) => {
 router.get("/gateway/:id", resolveGateway, async (req, res, next) => {
   PeripheralModel.find({ gateway: req.params.id }).exec((err, items) => {
     if (err) return res.status(500).send({ error: err.message });
-    return res.json(items);
+    return res.status(200).json(items);
   });
 });
 

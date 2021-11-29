@@ -6,13 +6,13 @@ const { resolveGateway } = require("../../middleware");
 router.get("/", async (req, res, next) => {
   GatewayModel.find().exec((err, items) => {
     if (err) return res.status(500).send({ error: err.message });
-    return res.json(items);
+    return res.status(200).json(items);
   });
 });
 
 // detail
 router.get("/:id", resolveGateway, async (req, res, next) => {
-  return res.json(req.gateway);
+  return res.status(200).json(req.gateway);
 });
 
 // create
@@ -40,11 +40,8 @@ router.patch("/:id", resolveGateway, async (req, res, next) => {
 router.delete("/:id", resolveGateway, async (req, res, next) => {
   const gateway = req.gateway;
   await gateway.remove((err, item) => {
-    if (err) {
-      res.status(500).send({ error: err.message });
-    } else {
-      res.status(200).json(item);
-    }
+    if (err) return res.status(500).send({ error: err.message });
+    return res.status(200).json(item);
   });
 });
 
