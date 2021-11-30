@@ -4,7 +4,7 @@ const PeripheralSchema = new Schema({
   uid: { type: Number, required: true },
   vendor: String,
   dateCreated: { type: Date, default: Date.now },
-  status: { type: Number, required: true, default: false },
+  status: { type: Boolean, required: true, default: false },
   gateway: {
     type: Schema.Types.ObjectId,
     ref: "GatewayModel",

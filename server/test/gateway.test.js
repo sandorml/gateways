@@ -34,19 +34,19 @@ describe("Gateways routes", () => {
       });
     }
 
-    let response = await request(app).get("/api/gateway");
+    const response = await request(app).get("/api/gateway");
     expect(response.statusCode).toEqual(200);
     expect(response.body.length).toEqual(amount);
   });
 
   it("should retrieve a gateway", async () => {
-    let gateway = await GatewayModel.create({
+    const gateway = await GatewayModel.create({
       ipv4Address: "192.168.1.1",
       serial: Math.random().toString(),
       name: "gateway",
     });
 
-    let response = await request(app).get(`/api/gateway/${gateway.id}`);
+    const response = await request(app).get(`/api/gateway/${gateway.id}`);
     expect(response.statusCode).toEqual(200);
     expect(response.body._id).toEqual(gateway.id);
     expect(response.body.ipv4Address).toEqual(gateway.ipv4Address);
@@ -55,13 +55,13 @@ describe("Gateways routes", () => {
   });
 
   it("should create a gateway", async () => {
-    let gateway = {
+    const gateway = {
       ipv4Address: "192.168.1.1",
       serial: Math.random().toString(),
       name: "gateway",
     };
 
-    let response = await request(app).post(`/api/gateway`).send(gateway);
+    const response = await request(app).post(`/api/gateway`).send(gateway);
     expect(response.statusCode).toEqual(201);
     expect(response.body.ipv4Address).toEqual(gateway.ipv4Address);
     expect(response.body.serial).toEqual(gateway.serial);
@@ -69,7 +69,7 @@ describe("Gateways routes", () => {
   });
 
   it("should delete a gateway", async () => {
-    let gateway = await GatewayModel.create({
+    const gateway = await GatewayModel.create({
       ipv4Address: "192.168.1.1",
       serial: Math.random().toString(),
       name: "gateway",
@@ -83,7 +83,7 @@ describe("Gateways routes", () => {
   });
 
   it("should update a gateway", async () => {
-    let gateway = await GatewayModel.create({
+    const gateway = await GatewayModel.create({
       ipv4Address: "192.168.1.1",
       serial: Math.random().toString(),
       name: "gateway",
@@ -109,7 +109,7 @@ describe("Gateways routes", () => {
     expect(response.body.name).toEqual("gateway2");
 
     // Update a whole object
-    let updated = {
+    const updated = {
       name: "gateway3",
       ipv4Address: "127.0.0.1",
       serial: "new serial",
